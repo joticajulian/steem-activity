@@ -1,0 +1,115 @@
+body
+{
+	margin: 0;
+	padding: 0;
+	color: #555;
+	font-family: 'Montserrat', sans-serif;
+	background: #EFEFEF;
+}
+
+#header
+{
+	margin: 0;
+	padding: 0;
+	border-top: 3px solid #C9E0ED;		
+	background-color: rgb(255, 150, 0);
+}
+
+#accountinfo
+{
+	margin-top: 20px;
+}
+
+#footer
+{
+	padding: 50px;
+	margin: 0;
+	text-align: center;
+	background-color: black;
+	border-top: 1px solid #000;
+}
+
+#logo
+{
+	padding: 10px 20px;
+	font-size: 200%;
+}
+
+.navbar {
+    margin-bottom: 0;
+}
+
+.m1{
+	margin-top: 20px;
+}
+
+.mt{
+	margin-top: 10px;
+}
+
+.mb{
+	margin-bottom: 10px;
+}
+
+.mtb{
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.bg-white{
+	background-color: white;
+}
+
+.bg-black{
+	background-color: black;
+}
+
+.bg-steem
+{
+	background-color: rgb(31,78,141);
+}
+
+.mz{
+	margin-bottom: 0;
+	margin-top: 0;
+}
+
+.cw{
+	color: white;
+}
+
+.box-plot{
+	border: 2px solid #807f7f;
+	margin: 10px;
+}
+
+.width50
+{
+	width: 50px;
+}
+
+.info
+{
+	background-color: white;
+	margin: 5px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #999;
+}
+
+.labelinfo
+{
+	font-weight: bold;
+}
+
+.message
+{
+	text-align: center;
+	padding: 30px;
+}
+
+.responsive-plot
+{
+	height: 300px;
+}
+

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Steem activity</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+		<link href="https://fonts.googleapis.com/css?family=Montserrat|Sansita" rel="stylesheet"/>
+		<link rel="stylesheet" type="text/css" href="./css/main.css"/>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>	
+		<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+		<script src="https://cdn.steemjs.com/lib/latest/steem.min.js"></script>		
+	</head>
+	<body onload="loadFollowersActivity()">
+		<nav class="navbar navbar-inverse">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<div id="logo navbar-brand">
+						<img src="./images/steem.png" class="navbar-brand"/>
+						<a class="navbar-brand" href="./index.html">Steem Activity</a>
+					</div>					
+				</div>
+				<!--<ul class="nav navbar-nav">
+					<li class="active"><a href="#">Item</a></li>					
+				</ul>-->
+				<form class="navbar-form navbar-left">
+					<div class="input-group">
+						<input id="input-account" type="text" class="form-control" placeholder="Account"/>
+						<div class="input-group-btn">
+							<button class="btn btn-default" type="button" onclick="searchAccount()">
+								<i class="glyphicon glyphicon-search"></i>
+							</button>
+						</div>
+					</div>
+				</form>	
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="http://steemit.com/@jga">Created by @jga</a></li>
+				</ul>
+			</div>			
+		</nav>
+
+		<div class="container bg-white">
+			<div class="row bg-steem">
+				<div class="col-sm-12 m1">
+					<div class="col-sm-5 col-xs-4">					
+					</div>
+					<div class="col-sm-2 col-xs-4">
+						<div class="col-sm-12 mtb">
+							<img id="profile_image" class="img-responsive img-circle" src="./images/no_photo.png"/>
+						</div>	
+					</div>
+					<div class="col-sm-5 col-xs-4">					
+					</div>					
+				</div>
+				<div class="col-sm-12 mb">
+					<center><h1 class="cw" id="labelAccount"></h1></center>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-sm-12 bg-black">
+					<h2 id="title-activity-account">Account activity </h2><p>Last 4 weeks</p>
+				</div>
+				
+				<div class="col-sm-4 col-xs-12">
+					<div class="col-sm-12 responsive-plot" id="a-chart1"></div>
+					<h4><span class="col-sm-12 label label-default" id="a-votesDay1"></h4>
+				</div>
+				<div class="col-sm-4 col-xs-12">
+					<div class="col-sm-12 responsive-plot" id="a-chart2"></div>
+					<h4><span class="col-sm-12 label label-default" id="a-votesDay2"></h4>
+				</div>
+				<div class="col-sm-4 col-xs-12">
+					<div class="col-sm-12 responsive-plot" id="a-chart3"></div>
+					<h4><span class="col-sm-12 label label-default" id="a-votesDay3"></h4>
+				</div>
+				<div class="col-sm-4 col-xs-12">
+					<div class="col-sm-12 responsive-plot" id="a-chart4"></div>
+					<h4><span class="col-sm-12 label label-default" id="a-votesDay4"></h4>
+				</div>
+				<div class="col-sm-4 col-xs-12">
+					<div class="col-sm-12 responsive-plot" id="a-chart5"></div>
+					<h4><span class="col-sm-12 label label-default" id="a-votesDay5"></h4>
+				</div>
+				<div class="col-sm-4 col-xs-12">
+					<div class="col-sm-12 responsive-plot" id="a-chart6"></div>
+					<h4><span class="col-sm-12 label label-default" id="a-votesDay6"></h4>
+				</div>
+				<div class="col-sm-4 col-xs-12">
+					<div class="col-sm-12 responsive-plot" id="a-chart0"></div>
+					<h4><span class="col-sm-12 label label-default" id="a-votesDay0"></h4>
+				</div>
+			</div>	
+			
+			<div class="row m1">
+				<div class="col-sm-12 bg-black">
+					<h2>Activity of followers</h2><p>Last 4 weeks</p>
+					<div class="col-sm-12">
+						<div class="progress">
+							<div id="progress-bar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+								0
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-sm-12">
+					<center>
+						<h3 class="mt" id="bestTime0"></h3> <br/>
+						<h4 class="mz" id="bestTime1"></h4> <br/>
+						<h4 class="mz" id="bestTime2"></h4> <br/>
+						<h4 class="mb" id="bestTime3"></h4>
+					</center>
+				</div>				
+			
+				<div class="col-sm-4 col-xs-12">
+					<div class="col-sm-12 responsive-plot" id="f-chart1"></div>
+					<h4><span class="col-sm-12 label label-default" id="f-votesDay1"></h4>
+				</div>
+				<div class="col-sm-4 col-xs-12">
+					<div class="col-sm-12 responsive-plot" id="f-chart2"></div>
+					<h4><span class="col-sm-12 label label-default" id="f-votesDay2"></h4>
+				</div>
+				<div class="col-sm-4 col-xs-12">
+					<div class="col-sm-12 responsive-plot" id="f-chart3"></div>
+					<h4><span class="col-sm-12 label label-default" id="f-votesDay3"></h4>
+				</div>
+				<div class="col-sm-4 col-xs-12">
+					<div class="col-sm-12 responsive-plot" id="f-chart4"></div>
+					<h4><span class="col-sm-12 label label-default" id="f-votesDay4"></h4>
+				</div>
+				<div class="col-sm-4 col-xs-12">
+					<div class="col-sm-12 responsive-plot" id="f-chart5"></div>
+					<h4><span class="col-sm-12 label label-default" id="f-votesDay5"></h4>
+				</div>
+				<div class="col-sm-4 col-xs-12">
+					<div class="col-sm-12 responsive-plot" id="f-chart6"></div>
+					<h4><span class="col-sm-12 label label-default" id="f-votesDay6"></h4>
+				</div>
+				<div class="col-sm-4 col-xs-12">
+					<div class="col-sm-12 responsive-plot" id="f-chart0"></div>
+					<h4><span class="col-sm-12 label label-default" id="f-votesDay0"></h4>
+				</div>
+			</div>
+			
+			<div class="row m1">
+				<div class="col-sm-12 bg-black mb">
+					<h2 id="title-followers">Followers</h2>
+				</div>
+				<p id="followers"></p>
+			</div>
+		</div>
+		<div id="footer" class="container-fluid">
+			<span> Steem activity by <a href="https://steemit.com/@jga/">@jga</a></span>
+		</div>
+	</body>
+	<script src="./js/steem_activity.js"></script>	
+</html>
