@@ -194,7 +194,7 @@ function timeToBreak(time,n){
 }
 
 function link(account){
-	var url = "file:///D:/varios/steemit/js/index.html";
+	var url = "https://joticajulian.github.io/steem-activity/index.html";
 	return "<a href=" + url + "?account=" + account + ">" + account + "</a>";
 }
 
@@ -217,7 +217,7 @@ function getQuery(){
 }
 
 function searchAccount(){
-	var url = "file:///D:/varios/steemit/js/index.html?account=" + document.getElementById("input-account").value;
+	var url = "https://joticajulian.github.io/steem-activity/index.html?account=" + document.getElementById("input-account").value;
 	window.open(url, "_self");  
 }
 
