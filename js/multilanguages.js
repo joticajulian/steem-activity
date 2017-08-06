@@ -31,7 +31,7 @@ label["fr"]["title-followers"]="Abonnés";
 
 label["en"]["lastweeks2"]="Last 4 weeks";
 label["es"]["lastweeks2"]="Últimas 4 semanas";
-label["es"]["lastweeks2"]="4 dernières semaines";
+label["fr"]["lastweeks2"]="4 dernières semaines";
 
 label["en"]["steemactivityby"]='Steem activity by <a href="https://steemit.com/@jga/">@jga</a>';
 label["es"]["steemactivityby"]='Steem activity por <a href="https://steemit.com/@jga/">@jga</a>';
