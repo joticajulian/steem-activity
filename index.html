@@ -25,7 +25,7 @@
 				</ul>-->
 				<form class="navbar-form navbar-left">
 					<div class="input-group">
-						<input id="input-account" type="text" class="form-control" placeholder="Account"/>						
+						<input id="input-account" type="text" class="form-control is_ml_p" ml_label="placeholder-account" placeholder="Account"/>						
 						<div class="input-group-btn">
 							<button class="btn btn-default" type="button" onclick="searchAccount()">
 								<i class="glyphicon glyphicon-search"></i>
@@ -34,7 +34,7 @@
 					</div>
 				</form>	
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="https://steemit.com/steemit/@jga/steem-activity-explore-what-is-the-best-time-to-publish">Created by @jga</a></li>
+					<li><a href="https://steemit.com/steemit/@jga/steem-activity-explore-what-is-the-best-time-to-publish"><span class="is_ml" id="createdby">Created by</span> @jga</a></li>
 				</ul>
 			</div>			
 		</nav>
@@ -59,7 +59,7 @@
 			
 			<div class="row">
 				<div class="col-sm-12 bg-black">
-					<h2 id="title-activity-account">Account activity </h2><p>Last 4 weeks</p><p id="timezone1"></p>
+					<h2 id="title-activity-account" class="is_ml">Account activity </h2><p id="lastweeks" class="is_ml">Last 4 weeks</p><p id="timezone1"></p>
 				</div>
 				
 				<div class="col-sm-4 col-xs-12">
@@ -94,7 +94,7 @@
 			
 			<div class="row m1">
 				<div class="col-sm-12 bg-black">
-					<h2>Activity of followers</h2><p>Last 4 weeks</p><p id="timezone2"></p>
+					<h2 id="title-activity-followers" class="is_ml">Activity of followers</h2><p id="lastweeks2" class="is_ml">Last 4 weeks</p><p id="timezone2"></p>
 					<div class="col-sm-12">
 						<div class="progress">
 							<div id="progress-bar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
@@ -151,9 +151,10 @@
 			</div>
 		</div>
 		<div id="footer" class="container-fluid">
-			<span> Steem activity by <a href="https://steemit.com/@jga/">@jga</a></span><br>
-			<span> See it on <a href="https://github.com/joticajulian/steem-activity/">github.com</a> and <a href="https://www.steem.center/index.php?title=Steem_Ecosystem:S-Steemis">steem.center</a></span>						
+			<span id="steemactivityby" class="is_ml"> Steem activity by <a href="https://steemit.com/@jga/">@jga</a></span><br>
+			<span id="seeitongithub" class="is_ml"> See it on <a href="https://github.com/joticajulian/steem-activity/">github.com</a> and <a href="https://www.steem.center/index.php?title=Steem_Ecosystem:S-Steemis">steem.center</a></span>						
 		</div>
 	</body>
-	<script src="./js/steem_activity.1.1.js"></script>	
+	<script src="./js/multilanguages.js"></script>
+	<script src="./js/steem_activity.1.2.js"></script>		
 </html>
