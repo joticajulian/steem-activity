@@ -44,7 +44,7 @@ label["fr"]["seeitongithub"]='Voir le projet sur <a href="https://github.com/jot
 //labels in steem_activity.js
 
 label["en"]["Local time: "]="Local time: ";
-label["es"]["Local time: "]="Tiempo local: ";
+label["es"]["Local time: "]="Hora local: ";
 label["fr"]["Local time: "]="Heure locale: ";
 
 label["en"]["nameDay"]=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];

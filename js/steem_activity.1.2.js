@@ -8,8 +8,8 @@ var last2week = new Date(now.getTime() - 2*7*24*60*60*1000);
 var last3week = new Date(now.getTime() - 3*7*24*60*60*1000);
 var last4week = new Date(now.getTime() - 4*7*24*60*60*1000);
 
-document.getElementById("timezone1").innerHTML = label[language]["Local time: "] + gmtToString();
-document.getElementById("timezone2").innerHTML = label[language]["Local time: "] + gmtToString();
+document.getElementById("timezone1").innerHTML = lang("Local time: ") + gmtToString();
+document.getElementById("timezone2").innerHTML = lang("Local time: ") + gmtToString();
 
 //Array of Votes and initialization
 var votesDay = [0,0,0,0,0,0,0];
@@ -34,7 +34,7 @@ for(i=0;i<7;i++){
 var followersLoaded = 0;
 var totalFollowers = 0;
 var textFollowers = "";
-nameDay = label[language]["nameDay"];
+nameDay = lang("nameDay");
 nameHours = ['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23'];
 
 
@@ -66,7 +66,7 @@ function loadFollowersActivity(){
 	});
 	
 	document.getElementById("labelAccount").innerHTML = "@" + account;
-	document.getElementById("title-followers").innerHTML = label[language]["Followers of @"] + account;
+	document.getElementById("title-followers").innerHTML = lang("Followers of @") + account;
 	//document.getElementById("title-activity-account").innerHTML = "Activity of @" + account;
 	
 	consultVotesAccount(account);
@@ -74,7 +74,7 @@ function loadFollowersActivity(){
 	steem.api.getFollowCount(account, function(err,result) {
 		console.log("Number of followers: "+result.follower_count);
 		totalFollowers = result.follower_count;
-		document.getElementById("title-followers").innerHTML = label[language]["Followers of @"] + account + ": "+totalFollowers;
+		document.getElementById("title-followers").innerHTML = lang("Followers of @") + account + ": "+totalFollowers;
 		consultVotesFollowers(account,0);		
 	});
 }
@@ -102,7 +102,7 @@ function consultVotesAccount(account){
 			}];					
 			var layout = { title: nameDay[i] };
 			Plotly.newPlot('a-chart'+i, data,layout);
-			document.getElementById("a-votesDay"+i).innerHTML = nameDay[i]+": "+a_votesDay[i]+label[language][" votes"];
+			document.getElementById("a-votesDay"+i).innerHTML = nameDay[i]+": "+a_votesDay[i]+lang(" votes");
 		}			
 	});
 }
@@ -149,13 +149,13 @@ function consultVotesFollowers(account, fromFollower){
 					var percentage = 100*followersLoaded/totalFollowers;
 					var tPer = percentage.toFixed(2);
 					var tBar = followersLoaded + "/" + totalFollowers;
-					if(followersLoaded == totalFollowers) tBar = tBar + label[language][". Complete"];
+					if(followersLoaded == totalFollowers) tBar = tBar + lang(". Complete");
 					document.getElementById("progress-bar").innerHTML = tBar;
 					document.getElementById("progress-bar").ariaValuenow = tPer;
 					document.getElementById("progress-bar").style = "width: "+tPer+"%;";
 					document.getElementById("followers").innerHTML = textFollowers;
 					for(i=0;i<4;i++){
-						document.getElementById("bestTime"+i).innerHTML = label[language]["Best Time #"]+(i+1)+": " + nameDay[bestHour[i][0]] + label[language][" at "] + bestHour[i][1] + " H";
+						document.getElementById("bestTime"+i).innerHTML = lang("Best Time #")+(i+1)+": " + nameDay[bestHour[i][0]] + lang(" at ") + bestHour[i][1] + " H";
 					}
 					firstText = false;
 					refreshText = 5;
@@ -171,7 +171,7 @@ function consultVotesFollowers(account, fromFollower){
 						}];					
 						var layout = { title: nameDay[i] };
 						Plotly.newPlot('f-chart'+i, data,layout);
-						document.getElementById("f-votesDay"+i).innerHTML = nameDay[i]+": "+votesDay[i]+label[language][" votes"];
+						document.getElementById("f-votesDay"+i).innerHTML = nameDay[i]+": "+votesDay[i]+lang(" votes");
 					}
 					firstPlot = false;
 					refreshPlot = 10;
@@ -234,17 +234,26 @@ function extractUrlProfileImage(url){
 
 function load_language() {
   $(".is_ml").each(function() {
-    $(this).html(label[language][$(this).attr("id")])
+    $(this).html(lang($(this).attr("id")))
   })
   
   $(".is_ml_p").each(function() {
-    $(this).attr('placeholder', label[language][$(this).attr("id")])
+    $(this).attr('placeholder', lang($(this).attr("id")))
   })
   
-  document.getElementById("timezone1").innerHTML = label[language]["Local time: "] + gmtToString();
-  document.getElementById("timezone2").innerHTML = label[language]["Local time: "] + gmtToString();
-  nameDay = label[language]["nameDay"];
+  document.getElementById("timezone1").innerHTML = lang("Local time: ") + gmtToString();
+  document.getElementById("timezone2").innerHTML = lang("Local time: ") + gmtToString();
+  nameDay = lang("nameDay");
 };
+
+function lang(id){
+	if(typeof label[language] === "undefined" ){
+		return label["en"][id];
+	}else if(typeof label[language][id] === "undefined"){
+		return label["en"][id];
+	}
+	return label[language][id];
+}
 
 function gmtToString(){
 	var text;
