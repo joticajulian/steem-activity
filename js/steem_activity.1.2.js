@@ -48,9 +48,10 @@ var firstPlot = true;
 var firstText = true;
 
 function loadFollowersActivity(){
-	steem.api.getConfig(function(err, response){
+	/*steem.api.getConfig(function(err, response){
 		console.log(err, response);
-	});
+	});*/
+    steem.api.setOptions({ url: 'https://api.steemit.com'});
 
 	var account = getQuery();
 	
