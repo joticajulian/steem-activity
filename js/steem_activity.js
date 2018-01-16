@@ -12,28 +12,15 @@ var last4week = new Date(now.getTime() - 4*7*24*60*60*1000);
 $('.timezone').text(lang("Local time: ") + gmtToString());
 
 //Array of Votes and initialization
-var votesDay = [0,0,0,0,0,0,0];
-var a_votesDay = [0,0,0,0,0,0,0];
 
-var votes = new Array(7);
-for(i=0;i<7;i++){
-	votes[i] = new Array(24);
-	for(j=0;j<24;j++){        
-		votes[i][j]=0;
-	}
-}
 
-var a_votes = new Array(7);
-for(i=0;i<7;i++){
-	a_votes[i] = new Array(24);
-	for(j=0;j<24;j++){        
-		a_votes[i][j]=0;
-	}
-}
+
+
 
 var followersLoaded = 0;
 var totalFollowers = 0;
 var textFollowers = "";
+
 nameDay = lang("nameDay");
 nameHours = ['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23'];
 
@@ -46,6 +33,9 @@ var refreshPlot = 10;
 var refreshText = 5;
 var firstPlot = true;
 var firstText = true;
+
+var votesDay = [0,0,0,0,0,0,0];
+var votes = new Array(7);
 
 function loadFollowersActivity(){
 	steem.api.setOptions({ url: 'https://api.steemit.com'});
@@ -60,17 +50,18 @@ function loadFollowersActivity(){
         console.log("getting internal price...");
         steem.api.getCurrentMedianHistoryPrice(function(err, response){
             var price = parseFloat(response.base.replace(" SBD",""))/parseFloat(response.quote.replace(" STEEM",""));
-                
             g = reward_balance/recent_claims*price;
             
             loadAccountProfile(account);
             consultVotesAccount(account);
+            startConsultVotesFollowers(account);
 	
-            steem.api.getFollowCount(account, function(err,result) {
-                console.log("Number of followers: "+result.follower_count);
-                totalFollowers = result.follower_count;
-                $('#title-followers').text(lang("Followers of @") + account + ": "+totalFollowers);
-                consultVotesFollowers(account,0);		
+            $('#sel1').change(function(){
+                consultVotesAccount(account);
+            });
+            
+            $('#sel2').change(function(){
+                startConsultVotesFollowers(account);
             });
         });
     });
@@ -91,17 +82,28 @@ function loadAccountProfile(account){
     $('#title-followers').text(lang("Followers of @") + account);
 }
 
+
 function consultVotesAccount(account){
+
+    var a_votesDay = [0,0,0,0,0,0,0];
+    var a_votes = new Array(7);
+    for(i=0;i<7;i++){
+        a_votes[i] = new Array(24);
+        for(j=0;j<24;j++){        
+            a_votes[i][j]=0;
+        }
+    }
+
 	steem.api.getAccountVotes(account, function(err, result) {
-		
+    
         //look each vote and put it in the array regarding the time
 		for(i=result.length-1;i>=0;i--){
 			var timeUTC = new Date(result[i].time);
 			var time = new Date(timeUTC.getTime() - gmt);
-			if(timeToBreak(time,result.length-i)) break;					
+			if(timeToBreak("1",time,result.length-i)) break;					
 			var hours = time.getHours();
 			var day = time.getDay();
-            var vote = parseInt(result[i].rshares)*g;
+            var vote = Number((parseInt(result[i].rshares)*g).toFixed(3));
 			a_votes[day][hours] += vote;
 			a_votesDay[day] += vote;	
 		}
@@ -117,6 +119,30 @@ function consultVotesAccount(account){
 			$('#a-votesDay'+i).text(nameDay[i]+": $"+a_votesDay[i].toFixed(2));
 		}			
 	});
+}
+
+function startConsultVotesFollowers(account){
+
+    votesDay = [0,0,0,0,0,0,0];
+    votes = new Array(7);
+    for(i=0;i<7;i++){
+        votes[i] = new Array(24);
+        for(j=0;j<24;j++){        
+            votes[i][j]=0;
+        }
+    }
+    
+    followersLoaded = 0;
+    totalFollowers = 0;
+    textFollowers = "";
+
+
+    steem.api.getFollowCount(account, function(err,result) {
+        console.log("Number of followers: "+result.follower_count);
+        totalFollowers = result.follower_count;
+        $('#title-followers').text(lang("Followers of @") + account + ": "+totalFollowers);
+        consultVotesFollowers(account,0);		
+    });
 }
 
 function consultVotesFollowers(account, fromFollower){	
@@ -136,10 +162,10 @@ function consultVotesFollowers(account, fromFollower){
 				for(i=result.length-1;i>=0;i--){
 					var timeUTC = new Date(result[i].time);
 					var time = new Date(timeUTC.getTime() - gmt);
-					if(timeToBreak(time,result.length-i)) break;					
+					if(timeToBreak("2",time,result.length-i)) break;					
 					var hours = time.getHours();
 					var day = time.getDay();                    
-                    var vote = parseInt(result[i].rshares)*g;
+                    var vote = Number((parseInt(result[i].rshares)*g).toFixed(3));
                     votes[day][hours] += vote;
                     votesDay[day] += vote;	
                     
@@ -201,8 +227,17 @@ function consultVotesFollowers(account, fromFollower){
 	});
 }
 
-function timeToBreak(time,n){
-	if(time < last4week) return true;
+function timeToBreak(block,time,n){
+    var selTime = $('#sel'+block).find(":selected").text();
+    if(selTime == lang("last1week"+block)){
+        if(time < last1week) return true;
+    }else if(selTime == lang("last2week"+block)){
+        if(time < last2week) return true;
+    }else if(selTime == lang("last3week"+block)){
+        if(time < last3week) return true;
+    }else{
+        if(time < last4week) return true;
+    }
 	return false;
 }
 

@@ -59,8 +59,18 @@
 			
 			<div class="row">
 				<div class="col-sm-12 bg-black">
-					<h2 id="title-activity-account" class="is_ml">Account activity </h2><p id="lastweeks" class="is_ml">Last 4 weeks</p><p class="timezone"></p>
-				</div>
+					<h2 id="title-activity-account" class="is_ml">Account activity </h2>
+                    <p class="timezone"></p>
+                    <div class="form-group col-sm-3 col-xs-12">
+                        <label for="sel1" class="is_ml" id="number-weeks1">Number of weeks:</label>
+                        <select class="form-control" id="sel1">
+                            <option class="is_ml" id="last1week1">Last week</option>
+                            <option class="is_ml" id="last2week1">Last 2 weeks</option>
+                            <option class="is_ml" id="last3week1">Last 3 weeks</option>
+                            <option class="is_ml" id="last4week1">Last 4 weeks</option>
+                        </select>
+                    </div>
+                </div>
 				
 				<div class="col-sm-4 col-xs-12">
 					<div class="col-sm-12 responsive-plot" id="a-chart1"></div>
@@ -94,7 +104,17 @@
 			
 			<div class="row m1">
 				<div class="col-sm-12 bg-black">
-					<h2 id="title-activity-followers" class="is_ml">Activity of followers</h2><p id="lastweeks2" class="is_ml">Last 4 weeks</p><p class="timezone"></p>
+					<h2 id="title-activity-followers" class="is_ml">Activity of followers</h2>
+                    <p class="timezone"></p>
+                    <div class="form-group col-sm-3 col-xs-12">
+                        <label for="sel2" class="is_ml" id="number-weeks2">Number of weeks:</label>
+                        <select class="form-control" id="sel2">
+                            <option class="is_ml" id="last1week2">Last week</option>
+                            <option class="is_ml" id="last2week2">Last 2 weeks</option>
+                            <option class="is_ml" id="last3week2">Last 3 weeks</option>
+                            <option class="is_ml" id="last4week2">Last 4 weeks</option>
+                        </select>
+                    </div>
 					<div class="col-sm-12">
 						<div class="progress">
 							<div id="progress-bar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
@@ -155,6 +175,6 @@
 			<span id="seeitongithub" class="is_ml"> See it on <a href="https://github.com/joticajulian/steem-activity/">github.com</a> and <a href="https://www.steem.center/index.php?title=Steem_Ecosystem:S-Steemis">steem.center</a></span>						
 		</div>
 	</body>
-	<script src="./js/multilanguages.js"></script>
-	<script src="./js/steem_activity.js?16"></script>		
+	<script src="./js/multilanguages.js?3"></script>
+	<script src="./js/steem_activity.js?19"></script>		
 </html>

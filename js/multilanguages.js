@@ -17,9 +17,37 @@ label["en"]["title-activity-account"]="Account activity";
 label["es"]["title-activity-account"]="Actividad de la cuenta";
 label["fr"]["title-activity-account"]="Activité du compte";
 
-label["en"]["lastweeks"]="Last 4 weeks";
-label["es"]["lastweeks"]="Últimas 4 semanas";
-label["fr"]["lastweeks"]="4 dernières semaines";
+label["en"]["last1week1"]="Last week";
+label["es"]["last1week1"]="Última semana";
+label["fr"]["last1week1"]="Dernière semaine";
+
+label["en"]["last2week1"]="Last 2 weeks";
+label["es"]["last2week1"]="Últimas 2 semanas";
+label["fr"]["last2week1"]="2 dernières semaines";
+
+label["en"]["last3week1"]="Last 3 weeks";
+label["es"]["last3week1"]="Últimas 3 semanas";
+label["fr"]["last3week1"]="3 dernières semaines";
+
+label["en"]["last4week1"]="Last 4 weeks";
+label["es"]["last4week1"]="Últimas 4 semanas";
+label["fr"]["last4week1"]="4 dernières semaines";
+
+label["en"]["last1week2"]="Last week";
+label["es"]["last1week2"]="Última semana";
+label["fr"]["last1week2"]="Dernière semaine";
+
+label["en"]["last2week2"]="Last 2 weeks";
+label["es"]["last2week2"]="Últimas 2 semanas";
+label["fr"]["last2week2"]="2 dernières semaines";
+
+label["en"]["last3week2"]="Last 3 weeks";
+label["es"]["last3week2"]="Últimas 3 semanas";
+label["fr"]["last3week2"]="3 dernières semaines";
+
+label["en"]["last4week2"]="Last 4 weeks";
+label["es"]["last4week2"]="Últimas 4 semanas";
+label["fr"]["last4week2"]="4 dernières semaines";
 
 label["en"]["title-activity-followers"]="Account activity";
 label["es"]["title-activity-followers"]="Actividad de los seguidores";
@@ -29,9 +57,13 @@ label["en"]["title-followers"]="Followers";
 label["es"]["title-followers"]="Seguidores";
 label["fr"]["title-followers"]="Abonnés";
 
-label["en"]["lastweeks2"]="Last 4 weeks";
-label["es"]["lastweeks2"]="Últimas 4 semanas";
-label["fr"]["lastweeks2"]="4 dernières semaines";
+label["en"]["number-weeks1"]="Number of weeks:";
+label["es"]["number-weeks1"]="Número de semanas:";
+label["fr"]["number-weeks1"]="Nombre de semaines:";
+
+label["en"]["number-weeks2"]="Number of weeks:";
+label["es"]["number-weeks2"]="Número de semanas:";
+label["fr"]["number-weeks2"]="Nombre de semaines:";
 
 label["en"]["steemactivityby"]='Steem activity by <a href="https://steemit.com/@jga/">@jga</a>';
 label["es"]["steemactivityby"]='Steem activity por <a href="https://steemit.com/@jga/">@jga</a>';
