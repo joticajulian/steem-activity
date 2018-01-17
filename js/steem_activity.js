@@ -23,8 +23,9 @@ var followers = new Array(1000);
 var account;
 var timeConsult;
 
-nameDay = lang("nameDay");
-nameHours = ['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23'];
+var nameDay = lang("nameDay");
+var nameHours = ['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23'];
+var marginPlot = {l:40,r:25,b:30,t:60,pad:5};
 
 
 var maxVotation = [0,0,0,0];
@@ -125,10 +126,14 @@ function consultVotesAccount(){
                 x: nameHours,
                 y: a_votes[i],	      
                 type: 'bar'
-            }];					
-            var layout = { title: nameDay[i] };
+            }];
+            var layout = { 
+                    title: (nameDay[i]+": $"+a_votesDay[i].toFixed(2)),
+                    margin: marginPlot
+                };
+            //var layout = { title: nameDay[i] };
             Plotly.newPlot('a-chart'+i, data,layout);
-            $('#a-votesDay'+i).text(nameDay[i]+": $"+a_votesDay[i].toFixed(2));
+            //$('#a-votesDay'+i).text(nameDay[i]+": $"+a_votesDay[i].toFixed(2));
         }			
     });    
 }
@@ -247,11 +252,14 @@ function getVotesFollower(k,tC){
                 var data = [{
                     x: nameHours,
                     y: votes[i],
-                    type: 'bar'
+                    type: 'bar',                    
                 }];					
-                var layout = { title: nameDay[i] };
+                var layout = { 
+                    title: (nameDay[i]+": $"+votesDay[i].toFixed(2)),
+                    margin: marginPlot
+                };
                 Plotly.newPlot('f-chart'+i, data,layout);
-                $('#f-votesDay'+i).text(nameDay[i]+": $"+votesDay[i].toFixed(2));
+                //$('#f-votesDay'+i).text(nameDay[i]+": $"+votesDay[i].toFixed(2));
             }
             firstPlot = false;
             refreshPlot = 10;
