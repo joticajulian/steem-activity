@@ -22,6 +22,7 @@ var numberRequests = 20;
 var followers = new Array(1000);
 var account;
 var timeConsult;
+var numErrorsFollower = 0;
 
 var nameDay = lang("nameDay");
 var nameHours = ['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23'];
@@ -176,6 +177,7 @@ function consultVotesFollowers(fromFollower,tC){
             followers[i] = result[i].follower;
             textFollowers = textFollowers + link(followers[i]) + " . . . . ";
         }
+        $('#followers').html(textFollowers);
          
         followersLoadedSubgroup = 0;
         for(i=0;i<numberRequests;i++){
@@ -193,10 +195,17 @@ function getVotesFollower(k,tC){
             console.log("Aborting last call");
             return;
         }
+
+        if(numErrorsFollower >= 30) $('#progress-bar').text("Error. Please try again").attr('aria-valuenow', 100).css('width',100+'%');
+        
         
         if(err){
             console.log("Error follower: "+ followers[k]);
-            getVotesFollower(k,this.tC);
+            numErrorsFollower++;
+            if(numErrorsFollower < 30) getVotesFollower(k,this.tC);
+            else{
+                $('#progress-bar').text("Error. Please try again").attr('aria-valuenow', 100).css('width',100+'%');
+            }
             return;
         }
                         
@@ -212,7 +221,7 @@ function getVotesFollower(k,tC){
             votesDay[day] += vote;
                     
             var v = [day,hours,votes[day][hours]];
-            for(i=0;i<4;i++) if(maxVotation[i][0]==day && maxVotation[i][1]==hours) maxVotation[i]=[0,0,0];
+            for(j=0;j<4;j++) if(maxVotation[j][0]==day && maxVotation[j][1]==hours) maxVotation[j]=[0,0,0];
             maxVotation.push(v);
             maxVotation.sort(function(a, b){return b[2]-a[2]});
             maxVotation.pop();
@@ -228,7 +237,7 @@ function getVotesFollower(k,tC){
             tPer = percentage.toFixed(2);
             tBar = followersLoaded + "/" + totalFollowers;
             $('#progress-bar').text(tBar).attr('aria-valuenow', tPer).css('width',tPer+'%');
-            $('#followers').html(textFollowers);
+            
             for(i=0;i<4;i++){
                 //$('#bestTime'+i).text(lang("Best Time #")+(i+1)+": " + nameDay[bestHour[i][0]] + lang(" at ") + bestHour[i][1] + " H");
                 $('#bestTime'+i).text(lang("Best Time #")+(i+1)+": " + nameDay[maxVotation[i][0]] + lang(" at ") + maxVotation[i][1] + " H");
