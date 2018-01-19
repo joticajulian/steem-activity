@@ -28,7 +28,7 @@ var nameHours = ['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14
 var marginPlot = {l:40,r:25,b:30,t:60,pad:5};
 
 
-var maxVotation = [0,0,0,0];
+var maxVotation = [[0,0,0],[0,0,0],[0,0,0],[0,0,0]];
 var maxVotationDay = 0;
 var bestHour = [[0,0],[0,0],[0,0],[0,0]];
 var bestDay = 0;
@@ -131,9 +131,7 @@ function consultVotesAccount(){
                     title: (nameDay[i]+": $"+a_votesDay[i].toFixed(2)),
                     margin: marginPlot
                 };
-            //var layout = { title: nameDay[i] };
-            Plotly.newPlot('a-chart'+i, data,layout);
-            //$('#a-votesDay'+i).text(nameDay[i]+": $"+a_votesDay[i].toFixed(2));
+            Plotly.newPlot('a-chart'+i, data,layout);            
         }			
     });    
 }
@@ -211,19 +209,13 @@ function getVotesFollower(k,tC){
             var day = time.getDay();                    
             var vote = Number((parseInt(result[i].rshares)*g).toFixed(3));
             votes[day][hours] += vote;
-            votesDay[day] += vote;	
+            votesDay[day] += vote;
                     
-            for(j=0;j<4;j++){
-                if(votes[day][hours] > maxVotation[j]){
-                    maxVotation[j] = votes[day][hours];
-                    bestHour[j] = [day,hours];
-                    break;
-                }
-            }
-            if(votesDay[day] > maxVotationDay){
-                maxVotationDay = votesDay[day];
-                bestDay = day;
-            }
+            var v = [day,hours,votes[day][hours]];
+            for(i=0;i<4;i++) if(maxVotation[i][0]==day && maxVotation[i][1]==hours) maxVotation[i]=[0,0,0];
+            maxVotation.push(v);
+            maxVotation.sort(function(a, b){return b[2]-a[2]});
+            maxVotation.pop();
         }
 
         followersLoaded++;	
@@ -235,11 +227,11 @@ function getVotesFollower(k,tC){
             var percentage = 100*followersLoaded/totalFollowers;
             tPer = percentage.toFixed(2);
             tBar = followersLoaded + "/" + totalFollowers;
-            //if(followersLoaded == totalFollowers) tBar = tBar + lang(". Complete");
             $('#progress-bar').text(tBar).attr('aria-valuenow', tPer).css('width',tPer+'%');
             $('#followers').html(textFollowers);
             for(i=0;i<4;i++){
-                $('#bestTime'+i).text(lang("Best Time #")+(i+1)+": " + nameDay[bestHour[i][0]] + lang(" at ") + bestHour[i][1] + " H");
+                //$('#bestTime'+i).text(lang("Best Time #")+(i+1)+": " + nameDay[bestHour[i][0]] + lang(" at ") + bestHour[i][1] + " H");
+                $('#bestTime'+i).text(lang("Best Time #")+(i+1)+": " + nameDay[maxVotation[i][0]] + lang(" at ") + maxVotation[i][1] + " H");
             }
             firstText = false;
             refreshText = 1;
