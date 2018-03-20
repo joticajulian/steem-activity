@@ -112,8 +112,7 @@ function consultVotesAccount(){
         }
         //look each vote and put it in the array regarding the time
         for(i=result.length-1;i>=0;i--){
-            var timeUTC = new Date(result[i].time);
-            var time = new Date(timeUTC.getTime() - gmt);
+            var time = new Date(result[i].time+'Z');
             if(timeToBreak("1",time,result.length-i)) break;					
             var hours = time.getHours();
             var day = time.getDay();
@@ -211,8 +210,7 @@ function getVotesFollower(k,tC){
                         
         //look each vote and put it in the array regarding the time
         for(i=result.length-1;i>=0;i--){
-            var timeUTC = new Date(result[i].time);
-            var time = new Date(timeUTC.getTime() - gmt);
+            var time = new Date(result[i].time+'Z');
             if(timeToBreak("2",time,result.length-i)) break;					
             var hours = time.getHours();
             var day = time.getDay();                    
