@@ -49,14 +49,20 @@ function loadFollowersActivity(){
     
     console.log("getting rewardFund(post)...");
     steem.api.getRewardFund("post", function(err, response){
-        console.log(err);
+        if(err) throw err
+        if(response.error) console.log(response.error)
+        
         var recent_claims = parseFloat(response.recent_claims);
         var reward_balance = parseFloat(response.reward_balance.replace(" STEEM",""));
+
+        console.log('Recent claims: '+recent_claims)
+        console.log('Reward balance: '+reward_balance)
           
         console.log("getting internal price...");
         steem.api.getCurrentMedianHistoryPrice(function(err, response){
-            console.log(err);
+            if(err) console.log(err);
             var price = parseFloat(response.base.replace(" SBD",""))/parseFloat(response.quote.replace(" STEEM",""));
+            console.log('Price: '+price)
             g = reward_balance/recent_claims*price;
             
             loadAccountProfile();
@@ -76,10 +82,9 @@ function loadFollowersActivity(){
 
 function loadAccountProfile(){
     steem.api.getAccounts([account], function(err, result){
-        if(err){
-            console.log(err);
-            return;
-        }
+        if(err) throw err
+        if(result.error) console.log(result.error)
+
         var info = JSON.parse(result[0].json_metadata);
         if(info.profile.hasOwnProperty('profile_image')){
             console.log(info.profile.profile_image + " extracted: " + extractUrlProfileImage(info.profile.profile_image));
@@ -104,16 +109,34 @@ function consultVotesAccount(){
         }
     }
 
-    
-    steem.api.getAccountVotes(account, function(err, result) {
-        if(err){
-            console.log(err);
-            return;
-        }
+    /**
+     * getAccount votes is no longer supported by the steemit API
+     * changing to getAccountHistory
+     *
+     */
+    //steem.api.getAccountVotes(account, function(err, result) {
+    steem.api.getAccountHistory(account, -1, 1000, (error,response) => {
+        if(err) throw err
+        if(response.error) console.log(result.error)
+        var result = []
+        for(var i in response) {
+          var r = response[i][1]
+          var time = new Date(r.timestamp+'Z')
+          if(timeToBreak("1",time)){
+            renderPlot()
+            return
+          }
+
+          if(r.op[0] === 'vote' && r.op[1].voter === account){
+            var vote = r.op[1].weight //..................... problem... we have here weight, but no rshares
+          }
+        })
+
+        console.log('getAccount votes: '+result.length)
         //look each vote and put it in the array regarding the time
         for(i=result.length-1;i>=0;i--){
             var time = new Date(result[i].time+'Z');
-            if(timeToBreak("1",time,result.length-i)) break;					
+            if(timeToBreak("1",time) break;					
             var hours = time.getHours();
             var day = time.getDay();
             var vote = Number((parseInt(result[i].rshares)*g).toFixed(3));
@@ -154,10 +177,9 @@ function startConsultVotesFollowers(){
     timeConsult = new Date();
     
     steem.api.getFollowCount(account, function(err,result) {        
-        if(err){
-            console.log(err);
-            return;
-        }
+        if(err) throw err
+        if(result.error) console.log(result.error)
+
         console.log("Number of followers: "+result.follower_count);
         totalFollowers = result.follower_count;
         $('#title-followers').text(lang("Followers of @") + account + ": "+totalFollowers);
@@ -167,10 +189,8 @@ function startConsultVotesFollowers(){
 
 function consultVotesFollowers(fromFollower,tC){
     steem.api.getFollowers(account, fromFollower, 'blog', followers.length, function(err, result) {
-        if(err){
-            console.log(err);
-            return;
-        }
+        if(err) throw err
+
         sizeF = result.length;
         for(i=0;i<sizeF;i++){
             followers[i] = result[i].follower;
@@ -211,7 +231,7 @@ function getVotesFollower(k,tC){
         //look each vote and put it in the array regarding the time
         for(i=result.length-1;i>=0;i--){
             var time = new Date(result[i].time+'Z');
-            if(timeToBreak("2",time,result.length-i)) break;					
+            if(timeToBreak("2",time) break;					
             var hours = time.getHours();
             var day = time.getDay();                    
             var vote = Number((parseInt(result[i].rshares)*g).toFixed(3));
@@ -276,7 +296,7 @@ function getVotesFollower(k,tC){
 		
         
 
-function timeToBreak(block,time,n){
+function timeToBreak(block,time){
     var selTime = $('#sel'+block).find(":selected").text();
     if(selTime == lang("last1week"+block)){
         if(time < last1week) return true;
