@@ -43,7 +43,7 @@ var votes = new Array(7);
 
 
 function loadFollowersActivity(){
-	steem.api.setOptions({ url: 'https://api.steemit.com'});
+	steem.api.setOptions({ url: 'https://anyx.io'});
 
 	account = getQuery();
     
